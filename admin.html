@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Bismehee Sibtain</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: var(--bg-cream);">
+
+  <!-- Admin Header -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <h1>Bismehee Sibtain</h1>
+        <span class="tagline">Admin Management Engine</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-secondary btn-sm">View Storefront</a>
+        <button class="btn btn-primary btn-sm hidden" id="logoutAdminBtn">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Portal Section -->
+  <section class="admin-section">
+    <div class="container">
+
+      <!-- Login Card View -->
+      <div class="admin-card" id="adminLoginCard" style="max-width: 450px; margin: 40px auto;">
+        <h3>Store Administrator Login</h3>
+        <!-- <p class="text-muted" style="margin-bottom: 20px;">
+          Use default credentials: <br><code>admin@bismeheesibtain.com</code> / <code>BismeheeAdmin2026!</code>
+        </p> -->
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="adminEmail" required placeholder="admin@bismeheesibtain.com">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="adminPassword" required placeholder="••••••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Authenticate</button>
+        </form>
+      </div>
+
+      <!-- Authenticated Dashboard View -->
+      <div class="admin-dashboard hidden" id="adminDashboard">
+        <div class="admin-tabs">
+          <button class="tab-btn active" data-tab="productsTab">Manage Inventory</button>
+          <button class="tab-btn" data-tab="ordersTab">Customer Orders</button>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div class="tab-content active" id="productsTab">
+          <div class="admin-grid">
+            
+            <!-- Add/Edit Form -->
+            <div class="admin-card">
+              <h3 id="formTitle">Add New Product</h3>
+              <form id="productForm">
+                <input type="hidden" id="prodId">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" id="prodTitle" required placeholder="e.g., Saudi Style Embroidered Niqab">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Category</label>
+                    <select id="prodCategory" required>
+                      <option value="Luxury Niqabs">Luxury Niqabs</option>
+                      <option value="Saudi Style">Saudi Style</option>
+                      <option value="Hijab Accessories">Hijab Accessories</option>
+                      <option value="Exclusive Sets">Exclusive Sets</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Badge Tag</label>
+                    <input type="text" id="prodBadge" placeholder="e.g., NEW, BESTSELLER">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Sale Price (₹)</label>
+                    <input type="number" id="prodPrice" required placeholder="1499">
+                  </div>
+                  <div class="form-group">
+                    <label>Original Price (₹)</label>
+                    <input type="number" id="prodOriginalPrice" placeholder="1999">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" id="prodImage" required placeholder="https://images.unsplash.com/...">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea id="prodDesc" rows="3" placeholder="Handcrafted with high-density chiffon..."></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" id="saveProdBtn">Save Product</button>
+                  <button type="button" class="btn btn-secondary hidden" id="cancelEditBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Product Table -->
+            <div class="admin-card">
+              <h3>Live Inventory Products</h3>
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminProductTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div class="tab-content" id="ordersTab">
+          <div class="admin-card">
+            <h3>Recent Store Orders</h3>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Items</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersTableBody">
+                  <tr>
+                    <td>#BS-1092</td>
+                    <td>Aisha Al-Hassan</td>
+                    <td>+91 9876543210</td>
+                    <td>Saudi Style Sword Niqab (x1)</td>
+                    <td>₹1,499</td>
+                    <td><span class="badge badge-success">Processing</span></td>
+                  </tr>
+                  <tr>
+                    <td>#BS-1091</td>
+                    <td>Fatima Sheikh</td>
+                    <td>+91 9123456789</td>
+                    <td>Royal Gold Embroidery Set (x1)</td>
+                    <td>₹3,299</td>
+                    <td><span class="badge badge-primary">Shipped</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="admin.js"></script>
+</body>
+</html>
